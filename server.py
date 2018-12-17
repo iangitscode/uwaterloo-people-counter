@@ -1,5 +1,6 @@
 import requests
 import json
+import psycopg2
 
 URL = "https://api.uwaterloo.ca/v2/wireless/usage.json?key=016e13bdee8e91aa67f8e09043778e84&fbclid=IwAR3ImFTFO3Iy4p1ezM0Y51iFSohKyyAF4duDWh2AHsh9XwrCoVGrG8oc6VI"
 response = requests.get(URL)
@@ -8,3 +9,7 @@ if response.status_code == 200:
   for d in data:
     if d["building_code"] == "AL":
       print(d)
+
+
+conn = psycopg2.connect("dbname=postgres user=snipower host='localhost' password=thisismypassword")
+conn.close()
