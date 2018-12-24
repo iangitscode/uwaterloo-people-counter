@@ -7,10 +7,11 @@ cursor = conn.cursor()
 cursor.execute("DROP TABLE IF EXISTS buildingdb;")
 cursor.execute("CREATE TABLE buildingdb();")
 
-for i in range(24 * 7):
-  # cursor.execute("ALTER TABLE buildingdb ADD COLUMN %s INT;", str(i))
+for i in range(31 * 4):
   colName = "col" + str(i)
   cursor.execute(sql.SQL("ALTER TABLE buildingdb ADD COLUMN {} INT;").format(sql.Identifier(colName)))
+
+cursor.execute(sql.SQL("ALTER TABLE buildingdb ADD COLUMN building_name VARCHAR;"))
 
 conn.commit()
 cursor.close()
