@@ -60,17 +60,18 @@ def get_baselines():
 # Makes a request for data and stores it in a temporary cache
 def five_minute_timer():
   five_minute_event = threading.Event()
-  while not five_minute_event.wait(FIVE_MINUTE_DELAY):
+  while True:
     data = get_json_data()
     if data != None:
       for d in data:
         building_client_count_cache[d[BUILDING_CODE]].append(d[CLIENTS])
+    five_minute_event.wait(FIVE_MINUTE_DELAY)
 
 # Runs everyday
 # Takes the minimum of all client numbers for the day and dumps it in the database
 def long_timer():
   long_event = threading.Event()
-  while not long_event.wait(LONG_DELAY):
+  while True:
     (conn, cursor) = connectToDB()
     # Map of building names to minimum number of clients connected in that hour
     to_write = {}
@@ -96,6 +97,8 @@ def long_timer():
     conn.close()
     cursor.close()
     print("Wrote to db!")
+    long_event.wait(LONG_DELAY)
+    
 
 # Calculates the number of people in each building
 # Based on the historical data
