@@ -1,0 +1,44 @@
+.app-component {
+  display: flex;
+  justify-content: center;
+  .main-table {
+      font-family: Roboto;
+      width: 50%;
+    .top-row {
+      display: flex;
+      font-size: 2.5em;
+      .name-label {
+        width: 50%;
+        text-align: center;
+       } 
+       .people-label {
+        width: 50%;
+        text-align: center;
+        .help-icon {
+          display: inline;
+        }
+       }
+    }
+    .row {
+      display: flex;
+      font-size: 2em;
+      .building-name {
+        width: 50%;
+        text-align: center;
+        border: 1px solid #8c8c8c;
+      }
+      .people-count {
+        width: 50%;
+        text-align: center;
+        border: 1px solid #8c8c8c;
+        border-left: 0px;
+      }
+      &:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      &:nth-child(odd) {
+        background-color: #e6e6e6;
+      }
+    }
+  }
+}

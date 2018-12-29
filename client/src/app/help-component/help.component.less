@@ -1,0 +1,25 @@
+.help-component {
+  .question-mark {
+    border: 1px solid black;
+    border-radius: 7px;
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+    cursor: help;
+
+    &:hover + .help-message {
+      display: block;
+    }
+  }
+  .help-message {
+    display: none;
+    position: fixed;
+    transform: translate(100%, 0);
+    padding: 20px;
+    font-size: 0.5em;
+    max-width: 200px;
+    border: 1px solid black;
+  }
+  display: inline-block;
+  vertical-align: top;
+}

@@ -4,10 +4,11 @@ import threading
 from psycopg2 import sql
 from flask import Flask, jsonify
 from flask_restful import Api
+from flask_cors import CORS
 from shared import *
 
-FIVE_MINUTE_DELAY = 1
-LONG_DELAY = 2
+FIVE_MINUTE_DELAY = 60 * 5
+LONG_DELAY = 60 * 60 * 24
 
 BUILDING_CODE = "building_code"
 CLIENTS = "clients"
@@ -17,6 +18,11 @@ building_client_count_cache = {}
 
 # Which column in the db should be updated
 currcol = 1
+
+# Flask App
+app = Flask(__name__)
+api = Api(app)
+CORS(app)
 
 # Resets the daily cache for each building
 def reset_daily_cache():
@@ -41,7 +47,6 @@ def get_baselines():
   cursor.execute(sql.SQL("SELECT * FROM buildingdb"))
   result = cursor.fetchall()
   json = {}
-  print(result)
   for building_data in result:
 
     # Last index is building name
@@ -98,7 +103,7 @@ def long_timer():
     cursor.close()
     print("Wrote to db!")
     long_event.wait(LONG_DELAY)
-    
+
 
 # Calculates the number of people in each building
 # Based on the historical data
@@ -109,14 +114,9 @@ def countPeople():
   for d in current_data:
     building_name = d[BUILDING_CODE]
     client_count = d[CLIENTS]
-    output[building_name]["baseline"] = client_count - output[building_name]["baseline"]
-
+    output[building_name]["people_count"] = max(client_count - output[building_name]["baseline"], 0)
   return jsonify(list(output.values()))
 
-
-# Flask App
-app = Flask(__name__)
-api = Api(app)
 reset_daily_cache()
 
 five_minute_thread = threading.Thread(None, five_minute_timer)
