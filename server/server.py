@@ -126,4 +126,4 @@ long_thread = threading.Thread(None, long_timer)
 long_thread.start()
 
 if __name__ == '__main__':
-  app.run(debug=True)
+  app.run(debug=False)
