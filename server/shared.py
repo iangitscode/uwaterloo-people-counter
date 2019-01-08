@@ -26,5 +26,8 @@ file_contents = f.read()
 file_contents = file_contents.split("\n")
 config = {}
 for line in file_contents:
+  if len(line) == 0:
+    break
+
   spl = line.split("=")
   config[spl[0]] = spl[1]
