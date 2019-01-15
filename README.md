@@ -10,13 +10,15 @@ This is a Python service that provides an estimate of the number of people in ea
 2. Create a database
 3. Create a config file with the contents
 
-```dbname={database name}
+```
+dbname={database name}
 host={database host ip}
 user={username}
 password={password}
-api={api key}```
+api={api key}
+```
 
-4. Run the db_setup.py script with `python3 db_setup.py`. This will create the necessary rows and columns in the database
-5. Run the app with `python3 server.py`
-6. You can now access the endpoint at `/peoplecount`
+4. Run the db_setup.py script with python3 db_setup.py. This will create the necessary rows and columns in the database
+5. Run the app with python3 server.py
+6. You can now access the endpoint at /peoplecount
 7. (Optional) From the /client/ directory, run ng serve to launch a frontend demonstration of this service, and access it from localhost:4200
