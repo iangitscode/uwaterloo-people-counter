@@ -149,7 +149,6 @@ def sayHi():
 
 # End copy
 
-
 reset_daily_cache()
 
 five_minute_thread = threading.Thread(None, five_minute_timer)
