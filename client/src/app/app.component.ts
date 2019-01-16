@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-const API_URL:string = 'http://localhost:5000';
+const API_URL:string = 'https://uwaterloo-people-counter.herokuapp.com'; //http://localhost:5000';
 const FIVE_MINUTES_IN_MS: number = 1000 * 60 * 5;
 
 @Component({

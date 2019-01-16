@@ -44,7 +44,7 @@ def incrementCurrcol():
 
 def get_baselines():
   (conn, cursor) = connectToDB()
-  cursor.execute(sql.SQL("SELECT * FROM buildingdb"))
+  cursor.execute(sql.SQL("SELECT * FROM " + config["relationname"]))
   result = cursor.fetchall()
   json = {}
   for building_data in result:
@@ -87,7 +87,7 @@ def long_timer():
 
     # Write each minimum for the day into the database
     for building in to_write:
-      cursor.execute(sql.SQL("UPDATE buildingdb SET {} = %s WHERE building_name = %s;")
+      cursor.execute(sql.SQL("UPDATE "+ config["relationname"]+" SET {} = %s WHERE building_name = %s;")
         .format(sql.Identifier(getCurrcol())),
                 (str(to_write[building]), building))
 
@@ -116,6 +116,39 @@ def countPeople():
     client_count = d[CLIENTS]
     output[building_name]["people_count"] = max(client_count - output[building_name]["baseline"], 0)
   return jsonify(list(output.values()))
+
+@app.route('/')
+def sayHi():
+  return "Hello world!"
+
+
+
+
+# Copied from db_setup
+
+# (conn, cursor) = connectToDB()
+
+# cursor.execute("DROP TABLE IF EXISTS " + config["relationname"] + ";")
+# cursor.execute("CREATE TABLE "+config["relationname"]+"();")
+
+# for i in range(31 * 4):
+#   colName = "col" + str(i)
+#   cursor.execute(sql.SQL("ALTER TABLE " + config["relationname"] + " ADD COLUMN {} INT;").format(sql.Identifier(colName)))
+
+# cursor.execute(sql.SQL("ALTER TABLE " + config["relationname"] + " ADD COLUMN building_name VARCHAR;"))
+
+# data = get_json_data()
+# if data != None:
+#   for d in data:
+#     building_client_count_cache[d[BUILDING_CODE]] = [d[CLIENTS]]
+#     cursor.execute(sql.SQL("INSERT INTO " + config["relationname"] + "(building_name, col0) VALUES (%s, %s);"),(d[BUILDING_CODE], d[CLIENTS]))
+
+# conn.commit()
+# cursor.close()
+# conn.close()
+
+# End copy
+
 
 reset_daily_cache()
 
