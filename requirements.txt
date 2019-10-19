@@ -3,5 +3,5 @@ gunicorn==19.9.0
 Flask-Cors==3.0.7
 Flask-RESTful==0.3.7
 psycopg2-binary==2.7.6.1
-requests==2.9.1
+requests==2.20.0
 requirements==0.1
